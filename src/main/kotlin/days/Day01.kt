@@ -1,3 +1,8 @@
+package days
+
+import util.println
+import util.readInput
+
 fun main() {
     val numbers = mapOf(
         "one" to 1,
@@ -8,7 +13,7 @@ fun main() {
         "six" to 6,
         "seven" to 7,
         "eight" to 8,
-        "nine" to 9
+        "nine" to 9,
     )
 
     fun calculate(input: List<String>): Int = input
@@ -40,14 +45,13 @@ fun main() {
         return calculate(parse(input))
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput1 = readInput("Day01_test1")
+    val testInput1 = readInput("test_input_day_01_part_1")
     check(part1(testInput1) == 142)
 
-    val input = readInput("Day01")
+    val input = readInput("input_day_01")
     part1(input).println()
 
-    val testInput2 = readInput("Day01_test2")
+    val testInput2 = readInput("test_input_day_01_part_2")
     check(part2(testInput2) == 281)
     part2(input).println()
 }
