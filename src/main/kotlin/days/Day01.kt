@@ -4,22 +4,13 @@ import util.println
 import util.readInput
 
 fun main() {
-    val numbers = mapOf(
-        "one" to 1,
-        "two" to 2,
-        "three" to 3,
-        "four" to 4,
-        "five" to 5,
-        "six" to 6,
-        "seven" to 7,
-        "eight" to 8,
-        "nine" to 9,
-    )
+    val numbers = listOf("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+        .withIndex().associateBy ({ it.value }, { it.index+1 })
 
-    fun calculate(input: List<String>): Int = input
-        .map { line -> line.filter { it.isDigit() } }
-        .map { line -> "${line.first()}${line.last()}" }
-        .sumOf { it.toInt() }
+    fun solve(input: List<String>): Int = input.sumOf { line ->
+        val digits = line.filter { it.isDigit() }
+        (digits.first().digitToInt() * 10) + digits.last().digitToInt()
+    }
 
     fun parse(input: List<String>): List<String> = input.map { line ->
         var parsed = ""
@@ -37,13 +28,9 @@ fun main() {
         parsed
     }
 
-    fun part1(input: List<String>): Int {
-        return calculate(input)
-    }
+    fun part1(input: List<String>) = solve(input)
 
-    fun part2(input: List<String>): Int {
-        return calculate(parse(input))
-    }
+    fun part2(input: List<String>) = solve(parse(input))
 
     val testInput1 = readInput("test_input_day_01_part_1")
     check(part1(testInput1) == 142)
