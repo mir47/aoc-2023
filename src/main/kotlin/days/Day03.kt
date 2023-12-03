@@ -39,20 +39,9 @@ fun main() {
         return Schematic(numbers, symbols)
     }
 
-    fun part1(input: List<String>): Int {
-        val (numbers, symbols) = parse(input)
-        return numbers
-            .filter { n -> symbols.any { s -> s.isAdjacent(n) } }
-            .sumOf { it.value.toInt() }
-    }
+    fun part1(input: List<String>) = parse(input).getParts().sum()
 
-    fun part2(input: List<String>): Int {
-        val (numbers, symbols) = parse(input)
-        return symbols.filter { it.value == '*' }
-            .map { numbers.filter { n -> it.isAdjacent(n) } }
-            .filter { it.size == 2 }
-            .sumOf { it[0].value.toInt() * it[1].value.toInt() }
-    }
+    fun part2(input: List<String>) = parse(input).getGearParts().sumOf { it.first * it.second }
 
     val testInput1 = readInput("test_input_day_${day}")
     check(part1(testInput1) == 4361)
@@ -74,4 +63,14 @@ data class Symbol(val value: Char, val x: Int, val y: Int) {
     fun isAdjacent(n: Number) = x in n.xRange() && y in n.yRange()
 }
 
-data class Schematic(val numbers: List<Number>, val symbols: List<Symbol>)
+data class Schematic(val numbers: List<Number>, val symbols: List<Symbol>) {
+    fun getParts() = numbers
+        .filter { symbols.any { s -> s.isAdjacent(it) } }
+        .map { it.value.toInt() }
+
+    fun getGearParts() = symbols
+        .filter { s -> s.value == '*' }
+        .map { s -> numbers.filter { n -> s.isAdjacent(n) } }
+        .filter { it.size == 2 }
+        .map { Pair(it[0].value.toInt(), it[1].value.toInt()) }
+}
