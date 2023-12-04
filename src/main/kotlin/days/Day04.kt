@@ -7,57 +7,32 @@ import kotlin.math.pow
 fun main() {
     val day = "04"
 
-    fun parse(input: List<String>): List<Card> {
-        val cards = mutableListOf<Card>()
-        input.forEach { line ->
-            val card = line.split(':')
-            val numbers = card.last().split('|')
-            val win = numbers.first().trim().split(' ')
-                .filter { it.isNotBlank() }
-                .map { it.toInt() }.toSet()
-            val pick = numbers.last().trim().split(' ')
-                .filter { it.isNotBlank() }
-                .map { it.toInt() }.toSet()
-            cards.add(Card(win, pick))
-        }
+    fun String.parseNumbers() = this
+        .split(" ")
+        .filter { it.isNotEmpty() }
+        .map { it.toInt() }
 
-        return cards
+    fun parse(input: List<String>): List<Pair<Int, Int>> = input.mapIndexed { i, line ->
+        val n = line.split(':')[1].split('|')
+        val win = n[0].parseNumbers().toSet()
+        val pick = n[1].parseNumbers().toSet()
+        i to (win intersect pick).size
     }
 
     fun part1(input: List<String>) = parse(input)
-        .map { it.winningNumbers() }
-        .filter { it.isNotEmpty() }
-        .sumOf { 2.0.pow(it.size - 1) }
+        .filter { it.second > 0 }
+        .sumOf { 2.0.pow(it.second - 1) }
         .toInt()
 
     fun part2(input: List<String>): Long {
         val cards = parse(input)
-        val m = cards.withIndex()
-            .associate { it.index+1 to it.value }
-            .toMutableMap()
-
-        val mm = mutableMapOf<Int, Long>()
-        mm[1] = 1
-
-        val lastCard = m.size
-        m.forEach { (cardId, card) ->
-            mm[cardId] = 1
-        }
-
-        m.forEach { (cardId, card) ->
-            val next = cardId+1
-            var winningNumbers = card.winningNumbers().size
-            if (cardId + winningNumbers > lastCard) {
-                winningNumbers = lastCard - cardId - 1
-            }
-            var final = next + winningNumbers - 1
-
-            for (i in next..final) {
-                mm[i] = (mm[i] ?: 1) + (mm[cardId] ?: 0)
+        val result = MutableList<Long>(cards.size) { 1 }
+        cards.forEach {
+            (1..it.second).forEach { i ->
+                result[it.first + i] += result[it.first]
             }
         }
-
-        return mm.values.sum()
+        return result.sum()
     }
 
     val testInput1 = readInput("test_input_day_${day}")
@@ -69,8 +44,4 @@ fun main() {
     val testInput2 = readInput("test_input_day_${day}")
     check(part2(testInput2) == 30L)
     part2(input).println()
-}
-
-data class Card(val win: Set<Int>, val pick: Set<Int>) {
-    fun winningNumbers() = win intersect pick
 }
