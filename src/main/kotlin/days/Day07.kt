@@ -8,7 +8,7 @@ fun main() {
 
     fun parse(input: List<String>) = input
         .map { line -> line.split(' ').let { it.first() to it.last() } }
-        .map { (cards, bid) -> Hand(cards, bid.toLong()) }
+        .map { (cards, bid) -> Hand(cards, bid.toInt()) }
 
     fun List<Hand>.solve() = sorted().map { it.bid }
         .reduceIndexed { index, acc, bid -> acc + ((index + 1) * bid) }
@@ -23,14 +23,14 @@ fun main() {
     val testInput = readInput("test_input_day_${day}")
     val input = readInput("input_day_${day}")
 
-    check(part1(testInput) == 6440L)
+    check(part1(testInput) == 6440)
     part1(input).println()
 
-    check(part2(testInput) == 5905L)
+    check(part2(testInput) == 5905)
     part2(input).println()
 }
 
-data class Hand(val cards: String, val bid: Long = 0): Comparable<Hand> {
+data class Hand(val cards: String, val bid: Int = 0): Comparable<Hand> {
 
     var withJoker = false
 
@@ -62,17 +62,17 @@ fun String.type() = groupingBy { it }.eachCount().let { counts ->
         5 in counts.values -> 7
         4 in counts.values -> 6
         3 in counts.values -> if (2 in counts.values) 5 else 4
-        pairs.size == 2 -> 3
-        pairs.size == 1 -> 2
-        else -> 1
+        pairs.size == 2    -> 3
+        pairs.size == 1    -> 2
+        else               -> 1
     }
 }
 
 fun Char.strength(withJoker: Boolean): Int = when (this) {
-    'A' -> 14
-    'K' -> 13
-    'Q' -> 12
-    'J' -> if (withJoker) 1 else 11
-    'T' -> 10
+    'A'  -> 14
+    'K'  -> 13
+    'Q'  -> 12
+    'J'  -> if (withJoker) 1 else 11
+    'T'  -> 10
     else -> this.digitToInt()
 }

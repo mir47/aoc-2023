@@ -10,11 +10,9 @@ fun main() {
         val time = input[0].split(':')[1].split(' ').filter { it.isNotEmpty() }.map { it.toInt() }
         val distance = input[1].split(':')[1].split(' ').filter { it.isNotEmpty() }.map { it.toInt() }
 
-        val races = time.mapIndexed { index, t ->
-            Pair(t, distance[index])
-        }
+        val races = time.mapIndexed { index, t -> Pair(t, distance[index]) }
         val rr = races.mapIndexed { idx, race ->
-            var r = mutableListOf<Int>()
+            val r = mutableListOf<Int>()
             for (speed in 1..<race.first) {
                 val d = speed * (race.first - speed)
                 if (d > race.second) r.add(d)
@@ -22,9 +20,7 @@ fun main() {
             Pair(idx, r.size.toLong())
         }
         var count = 1L
-        rr.forEach {
-            count *= it.second
-        }
+        rr.forEach { count *= it.second }
         return count
     }
 
@@ -32,9 +28,7 @@ fun main() {
         val time = listOf(input[0].split(':')[1].filter { it != ' ' }.toLong())
         val distance = listOf(input[1].split(':')[1].filter { it != ' ' }.toLong())
 
-        val races = time.mapIndexed { index, t ->
-            Pair(t, distance[index])
-        }
+        val races = time.mapIndexed { index, t -> Pair(t, distance[index]) }
         val rr = races.mapIndexed { idx, race ->
             val r = mutableListOf<Long>()
             for (speed in 1..<race.first) {
@@ -44,9 +38,7 @@ fun main() {
             Pair(idx, r.size.toLong())
         }
         var count = 1L
-        rr.forEach {
-            count *= it.second
-        }
+        rr.forEach { count *= it.second }
         return count
     }
 

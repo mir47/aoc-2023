@@ -43,14 +43,13 @@ fun main() {
 
     fun part2(input: List<String>) = parse(input).getGearParts().sumOf { it.first * it.second }
 
-    val testInput1 = readInput("test_input_day_${day}")
-    check(part1(testInput1) == 4361)
-
+    val testInput = readInput("test_input_day_${day}")
     val input = readInput("input_day_${day}")
+
+    check(part1(testInput) == 4361)
     part1(input).println()
 
-    val testInput2 = readInput("test_input_day_${day}")
-    check(part2(testInput2) == 467835)
+    check(part2(testInput) == 467835)
     part2(input).println()
 }
 

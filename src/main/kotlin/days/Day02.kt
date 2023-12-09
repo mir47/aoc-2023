@@ -41,14 +41,13 @@ fun main() {
         .map { it.findMin() }
         .sumOf { it.power() }
 
-    val testInput1 = readInput("test_input_day_${day}")
-    check(part1(testInput1) == 8)
-
+    val testInput = readInput("test_input_day_${day}")
     val input = readInput("input_day_${day}")
+
+    check(part1(testInput) == 8)
     part1(input).println()
 
-    val testInput2 = readInput("test_input_day_${day}")
-    check(part2(testInput2) == 2286)
+    check(part2(testInput) == 2286)
     part2(input).println()
 }
 

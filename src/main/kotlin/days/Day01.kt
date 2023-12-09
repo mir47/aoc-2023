@@ -33,12 +33,12 @@ fun main() {
     fun part2(input: List<String>) = solve(parse(input))
 
     val testInput1 = readInput("test_input_day_01_part_1")
-    check(part1(testInput1) == 142)
-
+    val testInput2 = readInput("test_input_day_01_part_2")
     val input = readInput("input_day_01")
+
+    check(part1(testInput1) == 142)
     part1(input).println()
 
-    val testInput2 = readInput("test_input_day_01_part_2")
     check(part2(testInput2) == 281)
     part2(input).println()
 }
