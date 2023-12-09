@@ -4,9 +4,6 @@ import util.readInts
 
 class Day09 : Day(9) {
 
-fun main() {
-    val day = "09"
-
     override fun partOne() = inputList.readInts().sumOf { it.extrapolate() }
 
     override fun partTwo() = inputList.readInts().sumOf { it.reversed().extrapolate() }
