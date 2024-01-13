@@ -13,6 +13,7 @@ class Day08 : Day(8) {
         val (instructions, network) = inputList[0] to parse(inputList)
         return network.filter { it.key.endsWith('A') }
             .map { it.key.solveForNode(instructions, network) }
+//            .reduce { acc, l -> lcm(acc, l) }
             .reduce(::lcm)
     }
 

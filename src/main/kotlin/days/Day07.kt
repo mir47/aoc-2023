@@ -32,6 +32,7 @@ fun main() {
 
 data class Hand(val cards: String, val bid: Int = 0): Comparable<Hand> {
 
+    // TODO: remove joker property, and rather make comparator param from outside
     var withJoker = false
 
     override fun compareTo(other: Hand): Int {
@@ -49,30 +50,30 @@ data class Hand(val cards: String, val bid: Int = 0): Comparable<Hand> {
         }
         return 0
     }
-}
 
-fun String.improve() = toCharArray().distinct()
-    .map { this.replace('J', it) }
-    .maxOf { Hand(it) }
-    .cards
+    private fun String.improve() = toCharArray().distinct()
+        .map { this.replace('J', it) }
+        .maxOf { Hand(it) }
+        .cards
 
-fun String.type() = groupingBy { it }.eachCount().let { counts ->
-    val pairs = counts.values.filter { it == 2 }
-    when {
-        5 in counts.values -> 7
-        4 in counts.values -> 6
-        3 in counts.values -> if (2 in counts.values) 5 else 4
-        pairs.size == 2    -> 3
-        pairs.size == 1    -> 2
-        else               -> 1
+    private fun String.type() = groupingBy { it }.eachCount().let { counts ->
+        val pairs = counts.values.filter { it == 2 }
+        when {
+            5 in counts.values -> 7
+            4 in counts.values -> 6
+            3 in counts.values -> if (2 in counts.values) 5 else 4
+            pairs.size == 2    -> 3
+            pairs.size == 1    -> 2
+            else               -> 1
+        }
     }
-}
 
-fun Char.strength(withJoker: Boolean): Int = when (this) {
-    'A'  -> 14
-    'K'  -> 13
-    'Q'  -> 12
-    'J'  -> if (withJoker) 1 else 11
-    'T'  -> 10
-    else -> this.digitToInt()
+    private fun Char.strength(withJoker: Boolean): Int = when (this) {
+        'A'  -> 14
+        'K'  -> 13
+        'Q'  -> 12
+        'J'  -> if (withJoker) 1 else 11
+        'T'  -> 10
+        else -> this.digitToInt()
+    }
 }

@@ -3,6 +3,7 @@ package days
 import util.println
 import util.readInput
 
+// TODO: simplify code
 fun main() {
     val day = "06"
 

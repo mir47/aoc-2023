@@ -12,9 +12,10 @@ object InputReader {
         return fromResources(day).readLines()
     }
 
-    private fun fromResources(day: Int): File {
+    private fun fromResources(day: Int, part: Int = 0): File {
         val d = day.toString().padStart(2, '0')
-        val file = "input_day_$d.txt"
+        val p = if (part > 0) "_part_$part" else ""
+        val file = "input_day_$d$p.txt"
         return File(javaClass.classLoader.getResource(file).toURI())
     }
 }

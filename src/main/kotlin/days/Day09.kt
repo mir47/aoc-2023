@@ -4,6 +4,11 @@ import util.readInts
 
 class Day09 : Day(9) {
 
+    init {
+//        check(partOne() == 1969958987)
+//        check(partTwo() == 1068)
+    }
+
     override fun partOne() = inputList.readInts().sumOf { it.extrapolate() }
 
     override fun partTwo() = inputList.readInts().sumOf { it.reversed().extrapolate() }

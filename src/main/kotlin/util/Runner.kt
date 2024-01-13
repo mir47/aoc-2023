@@ -14,7 +14,7 @@ object Runner {
 
     @JvmStatic
     fun main(args: Array<String>) {
-//        val args = arrayOf("10") // uncomment to only run given day
+        val args = arrayOf("16") // uncomment to only run given day
         if (args.isNotEmpty()) {
             val day = try {
                 args[0].toInt()
